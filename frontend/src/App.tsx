@@ -1,35 +1,60 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+// Brandon Fromm
+// Mission 9
+import './App.css';
+// imports the CollegeBasketballTeams.json file
+import schoolsData from "./CollegeBasketballTeams.json";
 
-function App() {
-  const [count, setCount] = useState(0)
-
-  return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+// interface for the CollegeBasketballTeams.json file
+interface CollegeInfo {
+  tid: number;
+  cid: number;
+  did: number;
+  school: string;
+  name: string;
+  abbrev: string;
+  pop: number;
+  city: string;
+  state: string;
+  latitude: number;
+  longitude: number;
 }
 
-export default App
+// my title function/component
+function Title() {
+  return <h1>NCAA Basketball College Information</h1>;
+}
+
+// my college function/component that gets the info that I want to display
+function College({ school, name, city, state }: CollegeInfo) {
+  return (
+    <>
+      <h2>{school}</h2>
+      <h3>Mascot Name: {name}</h3>
+      <h3>Location: {city}, {state}</h3>
+      <br />
+    </>
+  );
+}
+
+// my college list function/component that maps through the CollegeBasketballTeams.json file
+function CollegeList() {
+  return (
+    <>
+      {schoolsData.teams.map((college: CollegeInfo, index: number) => (
+        <College key={index} {...college} />
+      ))}
+    </>
+  );
+}
+
+// my main App function that returns the Title and CollegeList components
+function App() {
+  return (
+    <>
+      <Title />
+      <CollegeList />
+    </>
+  );
+}
+
+export default App;
